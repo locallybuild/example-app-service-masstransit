@@ -1,0 +1,28 @@
+# ---------------------------------------------------------------------------
+# Log Analytics - for storing the applications' logs
+# ---------------------------------------------------------------------------
+resource "azurerm_log_analytics_workspace" "main" {
+  name                = "${var.name_prefix}-logs"
+  resource_group_name = azurerm_resource_group.main.name
+  location            = azurerm_resource_group.main.location
+  sku                 = "PerGB2018"
+  retention_in_days   = 30
+}
+
+# ---------------------------------------------------------------------------
+# Diagnostic settings - ship both apps' Console Logs into the Log Analytics
+# Workspace so they're KQL-queryable in the Monitoring -> Telemetry UI. Within
+# the Locally Dashboard these can be queried using:
+#   AppServiceConsoleLogs | order by TimeGenerated desc
+# ---------------------------------------------------------------------------
+resource "azurerm_monitor_diagnostic_setting" "main" {
+  for_each = azurerm_linux_web_app.main
+
+  name                       = "console-logs"
+  target_resource_id         = each.value.id
+  log_analytics_workspace_id = azurerm_log_analytics_workspace.main.id
+
+  enabled_log {
+    category = "AppServiceConsoleLogs"
+  }
+}
