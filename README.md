@@ -76,6 +76,8 @@ Data Owner is broader than the Sender/Receiver roles in the [Service Bus example
 * The Locally Plugin for `Microsoft.Cache` installed (`locally plugin install --name Microsoft.Cache`).
 * The Locally Plugin for `Microsoft.Web` installed (`locally plugin install --name Microsoft.Web`).
 * The Locally Plugin for `Microsoft.ContainerRegistry` installed (`locally plugin install --name Microsoft.ContainerRegistry`).
+* The Locally Plugin for `Microsoft.Insights` installed (`locally plugin install --name Microsoft.Insights`).
+* The Locally Plugin for `Microsoft.OperationalInsights` installed (`locally plugin install --name Microsoft.OperationalInsights`).
 
 You don't need the .NET SDK, or to build anything: the image is pulled from Docker Hub.
 
